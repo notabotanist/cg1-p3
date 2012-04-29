@@ -20,12 +20,20 @@
 // namespace TODO_OPTIONAL_ {
 
 /// ctor TODO_BRIEF_DOCS_
-stereo::stereo() : {
+StereoViewport::StereoViewport() {
 }
 
 /// dtor TODO_BRIEF_DOCS_
-stereo::~stereo() {
+StereoViewport::~StereoViewport() {
 
+}
+
+/// rendering callback
+void StereoViewport::display() {
+	// setup viewport 1
+	drawScene();
+	// setup viewport 2
+	drawScene();
 }
 
 // } // end namespace TODO_OPTIONAL_
