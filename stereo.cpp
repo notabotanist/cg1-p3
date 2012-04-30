@@ -50,6 +50,7 @@ void StereoViewport::display() {
 /// default scene
 void StereoViewport::drawScene() {
 	glTranslatef(0.0, 0.0, 5);
+	glColor3f(1, 1, 1);
 	glutWireCube(1.0);
 }
 
