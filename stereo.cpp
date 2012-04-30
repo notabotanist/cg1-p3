@@ -25,24 +25,31 @@ StereoViewport::StereoViewport() : width(1000), height(500), x(0), y(0), eyeoff(
 
 /// rendering callback
 void StereoViewport::display() {
-	// set up projection matrix
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-	gluPerspective(45.0, width / (2 * height), 0.1, 10);
-	glMatrixMode(GL_MODELVIEW);
 
 	// setup left viewport (right eye view)
 	glViewport(x, y, width/2, height);
+	// set up projection matrix
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	gluPerspective(60.0, (GLfloat)width / (GLfloat)(2 * height), 1.0, 20.0);
+	glMatrixMode(GL_MODELVIEW);
+	glClear(GL_COLOR_BUFFER_BIT);
 	glLoadIdentity();
 	glTranslatef(-eyeoff, 0, 0);
-	glClear(GL_COLOR_BUFFER_BIT);
 	drawScene();
+	/*
 	// setup right viewport (left eye view)
 	glViewport(x+width/2, y, width/2, height);
+	// set up projection matrix
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	gluPerspective(60.0, (GLfloat)width / (GLfloat)(2 * height), 1.0, 20.0);
+	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 	glTranslatef(eyeoff, 0, 0);
 	glClear(GL_COLOR_BUFFER_BIT);
 	drawScene();
+	*/
 
 	glFlush();
 }
