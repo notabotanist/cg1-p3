@@ -51,7 +51,7 @@ void StereoViewport::display() {
 	glTranslatef(eyeoff, 0, 0);
 	drawScene();
 
-	glFlush();
+	glutSwapBuffers();
 }
 
 /// default scene
@@ -81,7 +81,7 @@ static void gldisplay() {
 ///
 int main( int argc, char* argv[] ) {
 	glutInit(&argc, argv);
-	glutInitDisplayMode(GLUT_RGB | GLUT_SINGLE);
+	glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE);
 	glutInitWindowSize(1000, 500);
 	glutCreateWindow(argv[0]);
 
