@@ -18,8 +18,8 @@ void Camera::calcView(float& vx, float& vy, float& vz) {
 	double pitchR(pitch * PI_180);
 	double yawR(yaw * PI_180);
 
-	vx = sin(yawR);
-	vz = -cos(yawR);
+	vx = sin(yawR) * cos(pitchR);
+	vz = -cos(yawR) * cos(pitchR);
 	vy = -sin(pitchR);
 }
 
@@ -65,6 +65,11 @@ void InputCamera::mouseMove(int x, int y) {
 	if(pitchoff != 0.0f || yawoff != 0.0f) {
 		pitch += pitchoff;
 		yaw += yawoff;
+		// clamp for gimbal lock
+		if (pitch > 90) pitch = 90;
+		if (pitch < -90) pitch = -90;
+		if (yaw > 180) yaw -= 360;
+		if (yaw < 180) yaw += 360;
 		glutPostRedisplay();
 
 		glutWarpPointer(centerX, centerY);
