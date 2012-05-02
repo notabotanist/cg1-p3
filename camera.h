@@ -59,7 +59,13 @@ public:
 	/// uncapture mouse
 	void uncaptureMouse();
 
+	/// Call when the window changes shape
 	void updateScreenCenter();
+
+	/// Query mouse capture state
+	inline bool isMouseCaptured() {
+		return mouseCaptured;
+	}
 };
 
 #endif
