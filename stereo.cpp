@@ -41,6 +41,7 @@ void StereoViewport::display() {
 	glViewport(x, y, width/2.0, height);
 	glClear(GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity();
+	cam.applyXform();
 	glTranslatef(-eyeoff, 0, 0);
 	drawScene();
 
@@ -48,6 +49,7 @@ void StereoViewport::display() {
 	glViewport(x+width/2.0, y, width/2.0, height);
 	glClear(GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity();
+	cam.applyXform();
 	glTranslatef(eyeoff, 0, 0);
 	drawScene();
 
@@ -71,6 +73,15 @@ static void gldisplay() {
 	sv.display();
 }
 
+static void glkeyboard(unsigned char key, int x, int y) {
+	sv.cam.wasdKeyboard(key);
+	glutPostRedisplay();
+
+	if (key == 'q') {
+		// exit(0);
+	}
+}
+
 ///
 /// main function TODO_DOCS_
 /// @author matthew: TODO_AUTHOR_FULL_NAME_
@@ -86,8 +97,10 @@ int main( int argc, char* argv[] ) {
 	glutCreateWindow(argv[0]);
 
 	sv.initProjection();
+	sv.cam.captureMouse();
 	glClearColor(0,0,0,0);
 	glutDisplayFunc(gldisplay);
+	glutKeyboardFunc(glkeyboard);
 	glutMainLoop();
 }
 

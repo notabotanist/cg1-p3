@@ -35,7 +35,7 @@ private:
 	float pfar;
 
 public:
-	Camera cam;
+	InputCamera cam;
 
 protected:
 	/// Override to specify contents of scene.
