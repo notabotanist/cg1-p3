@@ -20,7 +20,17 @@
 // namespace TODO_OPTIONAL_ {
 
 /// ctor: basic default values
-StereoViewport::StereoViewport() : width(1000), height(500), x(0), y(0), eyeoff(0.2) {
+StereoViewport::StereoViewport() : width(1000), height(500), x(0), y(0),
+	eyeoff(0.2), fov(60.f), pnear(1.f), pfar(20.f) {
+}
+
+/// init projection matrix
+void StereoViewport::initProjection() {
+	// set up projection matrix
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	gluPerspective(fov, (GLfloat)width / (GLfloat)(2 * height), pnear, pfar);
+	glMatrixMode(GL_MODELVIEW);
 }
 
 /// rendering callback
@@ -29,22 +39,13 @@ void StereoViewport::display() {
 
 	// setup left viewport (right eye view)
 	glViewport(x, y, width/2.0, height);
-	// set up projection matrix
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-	gluPerspective(60.0, (GLfloat)width / (GLfloat)(2 * height), 1.0, 20.0);
-	glMatrixMode(GL_MODELVIEW);
 	glClear(GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity();
 	glTranslatef(-eyeoff, 0, 0);
 	drawScene();
+
 	// setup right viewport (left eye view)
 	glViewport(x+width/2.0, y, width/2.0, height);
-	// set up projection matrix
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-	gluPerspective(60.0, (GLfloat)width / (GLfloat)(2 * height), 1.0, 20.0);
-	glMatrixMode(GL_MODELVIEW);
 	glClear(GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity();
 	glTranslatef(eyeoff, 0, 0);
@@ -84,6 +85,7 @@ int main( int argc, char* argv[] ) {
 	glutInitWindowSize(1000, 500);
 	glutCreateWindow(argv[0]);
 
+	sv.initProjection();
 	glClearColor(0,0,0,0);
 	glutDisplayFunc(gldisplay);
 	glutMainLoop();

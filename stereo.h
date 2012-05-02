@@ -27,6 +27,13 @@ private:
 	int y;
 	/// offset of right eye from center of 'camera'
 	float eyeoff;
+	/// gluPerspective settings
+	float fov;
+	float pnear;
+	float pfar;
+
+public:
+	/// private methods
 
 protected:
 	/// Override to specify contents of scene.
@@ -42,6 +49,10 @@ public:
 	/// pointers may require that implementors create a static function
 	/// that just calls this and give that to glutDisplayFunc.
 	void display();
+
+	/// Initializes projection matrix
+	/// Not needed to run every display cycle
+	void initProjection();
 };
 
 #endif // STEREO_H_
