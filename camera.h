@@ -19,10 +19,15 @@ struct Camera {
 	float pitch;
 	float yaw;
 
-
 	/// Applies view transformation represented by this camera.
 	/// Be sure we are in GL_MODELVIEW mode
 	void applyXform();
+
+	/// Calculates normalized vector pointing in currently faced direction
+	void calcView(float& vx, float& vy, float& vz);
+
+	/// Translates camera
+	void translate(float tx, float ty, float tz);
 };
 
 /// Camera object plus functions for handling input

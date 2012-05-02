@@ -4,6 +4,9 @@
 
 #include "camera.h"
 #include <GL/glut.h>
+#include <cmath>
+
+#define PI_180 0.017453
 
 void Camera::applyXform() {
 	glRotatef(pitch, 1.0, 0, 0);
@@ -11,20 +14,36 @@ void Camera::applyXform() {
 	glTranslatef(-x, -y, -z);
 }
 
+void Camera::calcView(float& vx, float& vy, float& vz) {
+	double pitchR(pitch * PI_180);
+	double yawR(yaw * PI_180);
+
+	vx = sin(yawR);
+	vz = -cos(yawR);
+	vy = -sin(pitchR);
+}
+
+void Camera::translate(float tx, float ty, float tz) {
+	x += tx;
+	y += ty;
+	z += tz;
+}
+
 void InputCamera::wasdKeyboard(unsigned char key) {
-	// TODO: these wasd update rules don't take facing into account.
+	float vx, vy, vz;
+	calcView(vx, vy, vz);
 	switch (key) {
 		case 'w':
-			z -= dp;
+			translate(dp*vx, dp*vy, dp*vz);
 			break;
 		case 'a':
-			x -= dp;
+			translate(dp*vz, 0, -dp*vx);
 			break;
 		case 's':
-			z += dp;
+			translate(-dp*vx, -dp*vy, -dp*vz);
 			break;
 		case 'd':
-			x += dp;
+			translate(-dp*vz, 0, dp*vx);
 			break;
 		case ' ':
 			y += dp;
