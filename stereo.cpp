@@ -41,16 +41,16 @@ void StereoViewport::display() {
 	glViewport(x, y, width/2.0, height);
 	glClear(GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity();
-	cam.applyXform();
 	glTranslatef(-eyeoff, 0, 0);
+	cam.applyXform();
 	drawScene();
 
 	// setup right viewport (left eye view)
 	glViewport(x+width/2.0, y, width/2.0, height);
 	glClear(GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity();
-	cam.applyXform();
 	glTranslatef(eyeoff, 0, 0);
+	cam.applyXform();
 	drawScene();
 
 	glutSwapBuffers();
@@ -77,8 +77,23 @@ static void glkeyboard(unsigned char key, int x, int y) {
 	sv.cam.wasdKeyboard(key);
 	glutPostRedisplay();
 
-	if (key == 'q') {
+	switch (key) {
+	case'q': 
 		// exit(0);
+		break;
+	case 0x1b:
+		sv.cam.uncaptureMouse();
+		break;
+	}
+}
+
+static void glpassivemouse(int x, int y) {
+	sv.cam.mouseMove(x,y);
+}
+
+static void glmouse(int button, int state, int x, int y) {
+	if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {
+		sv.cam.captureMouse();
 	}
 }
 
@@ -97,10 +112,12 @@ int main( int argc, char* argv[] ) {
 	glutCreateWindow(argv[0]);
 
 	sv.initProjection();
-	sv.cam.captureMouse();
+	sv.cam.updateScreenCenter();
 	glClearColor(0,0,0,0);
 	glutDisplayFunc(gldisplay);
 	glutKeyboardFunc(glkeyboard);
+	glutPassiveMotionFunc(glpassivemouse);
+	glutMouseFunc(glmouse);
 	glutMainLoop();
 }
 

@@ -6,9 +6,9 @@
 #include <GL/glut.h>
 
 void Camera::applyXform() {
-	glTranslatef(-x, -y, -z);
 	glRotatef(pitch, 1.0, 0, 0);
 	glRotatef(yaw, 0, 1.0, 0);
+	glTranslatef(-x, -y, -z);
 }
 
 void InputCamera::wasdKeyboard(unsigned char key) {
@@ -40,8 +40,8 @@ void InputCamera::mouseMove(int x, int y) {
 		return;
 	}
 
-	float pitchoff = -1.0f * (y - centerY);
-	float yawoff = -1.0f * (x - centerX);
+	float pitchoff = msense * (y - centerY);
+	float yawoff = msense * (x - centerX);
 
 	if(pitchoff != 0.0f || yawoff != 0.0f) {
 		pitch += pitchoff;
@@ -60,9 +60,10 @@ void InputCamera::updateScreenCenter() {
 void InputCamera::captureMouse() {
 	mouseCaptured = true;
 	glutWarpPointer(centerX, centerY);
-	// TODO: hide pointer
+	glutSetCursor(GLUT_CURSOR_NONE);
 }
 
 void InputCamera::uncaptureMouse() {
 	mouseCaptured = false;
+	glutSetCursor(GLUT_CURSOR_INHERIT);
 }
