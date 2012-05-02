@@ -14,6 +14,8 @@
 #ifndef STEREO_H_
 #define STEREO_H_
 
+#include "camera.h"
+
 /// @author matthew:
 /// Uses 2 viewports to render a scene with stereoscopic output
 class StereoViewport {
@@ -33,7 +35,7 @@ private:
 	float pfar;
 
 public:
-	/// private methods
+	Camera cam;
 
 protected:
 	/// Override to specify contents of scene.

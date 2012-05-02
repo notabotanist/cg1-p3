@@ -1,5 +1,5 @@
 #
-# Created by gmakemake (Sparc Jan 19 2010) on Mon Apr 30 15:32:37 2012
+# Created by gmakemake (Ubuntu Sep  7 2011) on Wed May  2 15:03:41 2012
 #
 
 #
@@ -7,13 +7,15 @@
 #
 
 .SUFFIXES:
-.SUFFIXES:	.a .o .c .C .cpp .s
+.SUFFIXES:	.a .o .c .C .cpp .s .S
 .c.o:
 		$(COMPILE.c) $<
 .C.o:
 		$(COMPILE.cc) $<
 .cpp.o:
 		$(COMPILE.cc) $<
+.S.s:
+		$(CPP) -o $*.s $<
 .s.o:
 		$(COMPILE.cc) $<
 .c.a:
@@ -38,7 +40,7 @@ LINK.c = $(CC) $(CFLAGS) $(CPPFLAGS) $(LDFLAGS)
 LINK.cc = $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(LDFLAGS)
 COMPILE.c = $(CC) $(CFLAGS) $(CPPFLAGS) -c
 COMPILE.cc = $(CXX) $(CXXFLAGS) $(CPPFLAGS) -c
-
+CPP = $(CPP) $(CPPFLAGS)
 ########## Flags from header.mak
 
 #
@@ -65,13 +67,14 @@ CCLIBFLAGS = $(LIBFLAGS)
 ########## End of flags from header.mak
 
 
-CPP_FILES =	stereo.cpp
+CPP_FILES =	camera.cpp stereo.cpp
 C_FILES =	
+PS_FILES =	
 S_FILES =	
-H_FILES =	stereo.h
+H_FILES =	camera.h stereo.h
 SOURCEFILES =	$(H_FILES) $(CPP_FILES) $(C_FILES) $(S_FILES)
 .PRECIOUS:	$(SOURCEFILES)
-OBJFILES =	
+OBJFILES =	camera.o 
 
 #
 # Main targets
@@ -86,7 +89,8 @@ stereo:	stereo.o $(OBJFILES)
 # Dependencies
 #
 
-stereo.o:	stereo.h
+camera.o:	camera.h
+stereo.o:	camera.h stereo.h
 
 #
 # Housekeeping
