@@ -18,7 +18,7 @@ public:
 	virtual ~Geometry() {}
 
 	/// render as implementor sees fit
-	void render() = 0;
+	virtual void render() = 0;
 };
 
 /// @author mrm4677
@@ -26,7 +26,7 @@ public:
 class Scene {
 private:
 	/// can't instantiate Geometry objects. Does STL work with refs?
-	vector<Geometry&> children;
+	std::vector<Geometry&> children;
 
 public:
 	Scene();

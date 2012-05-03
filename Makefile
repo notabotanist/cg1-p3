@@ -1,5 +1,5 @@
 #
-# Created by gmakemake (Ubuntu Sep  7 2011) on Wed May  2 15:03:41 2012
+# Created by gmakemake (Sparc Jan 19 2010) on Thu May  3 01:02:55 2012
 #
 
 #
@@ -7,15 +7,13 @@
 #
 
 .SUFFIXES:
-.SUFFIXES:	.a .o .c .C .cpp .s .S
+.SUFFIXES:	.a .o .c .C .cpp .s
 .c.o:
 		$(COMPILE.c) $<
 .C.o:
 		$(COMPILE.cc) $<
 .cpp.o:
 		$(COMPILE.cc) $<
-.S.s:
-		$(CPP) -o $*.s $<
 .s.o:
 		$(COMPILE.cc) $<
 .c.a:
@@ -40,7 +38,7 @@ LINK.c = $(CC) $(CFLAGS) $(CPPFLAGS) $(LDFLAGS)
 LINK.cc = $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(LDFLAGS)
 COMPILE.c = $(CC) $(CFLAGS) $(CPPFLAGS) -c
 COMPILE.cc = $(CXX) $(CXXFLAGS) $(CPPFLAGS) -c
-CPP = $(CPP) $(CPPFLAGS)
+
 ########## Flags from header.mak
 
 #
@@ -67,14 +65,13 @@ CCLIBFLAGS = $(LIBFLAGS)
 ########## End of flags from header.mak
 
 
-CPP_FILES =	camera.cpp stereo.cpp
+CPP_FILES =	camera.cpp scene.cpp stereo.cpp
 C_FILES =	
-PS_FILES =	
 S_FILES =	
-H_FILES =	camera.h stereo.h
+H_FILES =	camera.h scene.h stereo.h
 SOURCEFILES =	$(H_FILES) $(CPP_FILES) $(C_FILES) $(S_FILES)
 .PRECIOUS:	$(SOURCEFILES)
-OBJFILES =	camera.o 
+OBJFILES =	camera.o scene.o 
 
 #
 # Main targets
@@ -90,6 +87,7 @@ stereo:	stereo.o $(OBJFILES)
 #
 
 camera.o:	camera.h
+scene.o:	scene.h
 stereo.o:	camera.h stereo.h
 
 #
