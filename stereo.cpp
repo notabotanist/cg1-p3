@@ -107,7 +107,7 @@ static void glmouse(int button, int state, int x, int y) {
 ///
 int main( int argc, char* argv[] ) {
 	glutInit(&argc, argv);
-	glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE);
+	glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE | GLUT_DEPTH);
 	glutInitWindowSize(1000, 500);
 	glutCreateWindow(argv[0]);
 
