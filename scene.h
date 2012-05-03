@@ -8,6 +8,7 @@
 #define SCENE_H_
 
 #include <vector>
+using namespace std;
 
 /// @author mrm4677
 /// Abstract base class for objects renderable in Scenes
@@ -22,18 +23,21 @@ public:
 };
 
 /// @author mrm4677
-/// Container for Geometries
+/// Container for Geometries.
 class Scene {
 private:
-	/// can't instantiate Geometry objects. Does STL work with refs?
-	std::vector<Geometry&> children;
+	/// can't instantiate Geometry objects.  Keep pointers for polymorphism
+	std::vector<Geometry*> children;
 
 public:
 	Scene();
-	virtual ~Scene() {}
+	virtual ~Scene();
 
 	/// Iterates over all child Geometries and renders them in turn
 	void render();
-}
+
+	/// Add geometry to scene.  This object takes ownership of the geometry.
+	void addGeometry(Geometry& geom);
+};
 
 #endif
