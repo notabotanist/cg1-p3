@@ -12,8 +12,13 @@
 /// @author mrm4677
 /// Abstract base class for objects renderable in Scenes
 class Geometry {
+private:
+	/// if true, the Geometry should render solid instead of wireframe
+	bool solid;
+
 protected:
 	Geometry();	// protected to make class abstract
+
 public:
 	virtual ~Geometry() {}
 

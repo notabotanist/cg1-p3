@@ -6,7 +6,7 @@
 #include "scene.h"
 #include <GL/glut.h>
 
-Geometry::Geometry() {
+Geometry::Geometry() : solid(false) {
 }
 
 Scene::Scene() : children() {
