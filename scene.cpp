@@ -50,6 +50,13 @@ void Scene::render() {
 	glPopMatrix();
 }
 
+void Scene::animate() {
+	for (vector<Geometry*>::iterator iter(children.begin());
+			iter != children.end(); iter++) {
+		(*iter)->animate();
+	}
+}
+
 void Scene::addGeometry(Geometry& geom) {
 	children.push_back(&geom);
 }

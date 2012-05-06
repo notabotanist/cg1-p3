@@ -11,13 +11,28 @@
 #include "camera.h"
 #include "targets.h"
 
-static StereoViewport sv;
+class StereoSceneViewport : public StereoViewport {
+public:
+	Scene& scene;
+
+	StereoSceneViewport(Scene& s) : StereoViewport(), scene(s) {
+	}
+
+	virtual void drawScene() {
+		scene.render();
+	}
+};
+
+static StereoSceneViewport* sv;
+///////////////////////
+// OpenGL callbacks
+///////////////////////
 static void gldisplay() {
-	sv.display();
+	sv->display();
 }
 
 static void glkeyboard(unsigned char key, int x, int y) {
-	sv.cam.wasdKeyboard(key);
+	sv->cam.wasdKeyboard(key);
 	glutPostRedisplay();
 
 	switch (key) {
@@ -25,19 +40,35 @@ static void glkeyboard(unsigned char key, int x, int y) {
 		exit(0);
 		break;
 	case 0x1b:
-		sv.cam.uncaptureMouse();
+		sv->cam.uncaptureMouse();
 		break;
 	}
 }
 
 static void glpassivemouse(int x, int y) {
-	sv.cam.mouseMove(x,y);
+	sv->cam.mouseMove(x,y);
 }
 
 static void glmouse(int button, int state, int x, int y) {
 	if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {
-		sv.cam.captureMouse();
+		sv->cam.captureMouse();
 	}
+}
+
+static void gltimer(int value) {
+	sv->scene.animate();
+	glutPostRedisplay();
+	// aiming for 50 fps
+	glutTimerFunc(20, gltimer, 0);
+}
+
+/////////////////////////
+// Other functions
+/////////////////////////
+
+/// Populates the given Scene with stuff
+void populateScene(Scene& scene) {
+	scene.addGeometry(*(new Radar()));
 }
 
 ///
@@ -54,12 +85,18 @@ int main( int argc, char* argv[] ) {
 	glutInitWindowSize(1000, 500);
 	glutCreateWindow(argv[0]);
 
-	sv.initProjection();
-	sv.cam.updateScreenCenter();
+	// create scene
+	Scene theScene;
+	populateScene(theScene);
+	
+	sv = new StereoSceneViewport(theScene);
+	sv->initProjection();
+	sv->cam.updateScreenCenter();
 	glClearColor(0,0,0,0);
 	glutDisplayFunc(gldisplay);
 	glutKeyboardFunc(glkeyboard);
 	glutPassiveMotionFunc(glpassivemouse);
 	glutMouseFunc(glmouse);
+	glutTimerFunc(20, gltimer, 0);
 	glutMainLoop();
 }

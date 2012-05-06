@@ -62,6 +62,9 @@ public:
 	/// Iterates over all child Geometries and renders them in turn
 	void render();
 
+	/// Iterates over all child Geometries and animates them in turn
+	void animate();
+
 	/// Add geometry to scene.  This object takes ownership of the geometry.
 	void addGeometry(Geometry& geom);
 

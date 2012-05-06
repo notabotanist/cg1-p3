@@ -45,7 +45,8 @@ protected:
 public:
 	/// parameterless constructor
 	StereoViewport();
-	// default destructor should be ok
+	// default destructor is not ok for anything that gets overridden
+	virtual ~StereoViewport() {}
 
 	/// Called to perform stereoscopic rendering.  The nature of c++
 	/// pointers may require that implementors create a static function
