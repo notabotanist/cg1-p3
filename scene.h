@@ -25,6 +25,7 @@ public:
 
 protected:
 	Geometry();	// protected to make class abstract
+	Geometry(float _x, float _y, float _z);
 
 	/// Implement to create actual geometry with respect to local
 	/// coordinate system set up by render()

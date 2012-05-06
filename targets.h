@@ -10,6 +10,9 @@
 /// @author mrm4677
 /// Base class for geometry objects which can be targeted
 class Target : public Geometry {
+public:
+	Target();
+	Target(float _x, float _y, float _z);
 	// TODO: methods appropriate for targetable things
 };
 
@@ -28,6 +31,7 @@ protected:
 
 public:
 	Radar();
+	Radar(float _x, float _y, float _z);
 
 	/// Implementations over abstract
 	virtual void animate();

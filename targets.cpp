@@ -7,7 +7,14 @@
 #include <GL/glut.h>
 #include "targets.h"
 
+Target::Target() : Geometry() {}
+Target::Target(float _x, float _y, float _z) : Geometry(_x, _y, _z) {
+}
+
 Radar::Radar() : rotation(0), dR(5) {
+}
+
+Radar::Radar(float _x, float _y, float _z) : Target(_x, _y, _z), rotation(0), dR(5) {
 }
 
 void Radar::doRender() {

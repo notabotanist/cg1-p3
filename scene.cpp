@@ -9,6 +9,9 @@
 Geometry::Geometry() : solid(false) {
 }
 
+Geometry::Geometry(float _x, float _y, float _z) : solid(false), x(_x), y(_y), z(_z) {
+}
+
 // set up local coords
 void Geometry::render() {
 	// store current matrix
