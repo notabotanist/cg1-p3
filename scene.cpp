@@ -38,3 +38,10 @@ void Scene::render() {
 void Scene::addGeometry(Geometry& geom) {
 	children.push_back(&geom);
 }
+
+void Scene::setAllSolid(bool s) {
+	for (vector<Geometry*>::iterator iter(children.begin());
+			iter != children.end(); iter++) {
+		(*iter)->setSolid(s);
+	}
+}

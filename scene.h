@@ -29,6 +29,11 @@ public:
 	/// Call at invervals to perform animation based on implementor
 	/// Default implementation: do nothing
 	virtual void animate() {}
+
+	/// setter
+	inline void setSolid(bool s) {
+		solid = s;
+	}
 };
 
 /// @author mrm4677
@@ -47,6 +52,9 @@ public:
 
 	/// Add geometry to scene.  This object takes ownership of the geometry.
 	void addGeometry(Geometry& geom);
+
+	/// Sets solid flag for all children
+	void setAllSolid(bool s);
 };
 
 #endif
