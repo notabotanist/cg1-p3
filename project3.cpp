@@ -33,16 +33,23 @@ static void gldisplay() {
 
 static void glkeyboard(unsigned char key, int x, int y) {
 	sv->cam.wasdKeyboard(key);
-	glutPostRedisplay();
 
 	switch (key) {
-	case'q': 
+	case 'q': 
 		exit(0);
 		break;
 	case 0x1b:
 		sv->cam.uncaptureMouse();
 		break;
+	case '1':
+		sv->scene.setAllSolid(false);
+		break;
+	case '2':
+		sv->scene.setAllSolid(true);
+		break;
 	}
+
+	glutPostRedisplay();
 }
 
 static void glpassivemouse(int x, int y) {
