@@ -68,6 +68,7 @@ void StereoViewport::drawScene() {
 // (main function is NEVER in a namespace)
 /////////////////////////// main // TODO_ // DELETE section if not needed
 
+/*
 static StereoViewport sv;
 static void gldisplay() {
 	sv.display();
@@ -120,4 +121,5 @@ int main( int argc, char* argv[] ) {
 	glutMouseFunc(glmouse);
 	glutMainLoop();
 }
+*/
 
