@@ -9,6 +9,23 @@
 Geometry::Geometry() : solid(false) {
 }
 
+// set up local coords
+void Geometry::render() {
+	// store current matrix
+	glPushMatrix();
+
+	glTranslatef(x, y, z);
+	glRotatef(roll, 0, 0, 1);
+	glRotatef(pitch, 1, 0, 0);
+	glRotatef(yaw, 0, 1, 0);
+
+	// go go gadget implementor
+	doRender();
+
+	// restore matrix
+	glPopMatrix();
+}
+
 Scene::Scene() : children() {
 }
 
@@ -26,8 +43,6 @@ void Scene::render() {
 
 	for (vector<Geometry*>::iterator iter(children.begin());
 			iter != children.end(); iter++) {
-		glPopMatrix();
-		glPushMatrix();
 		(*iter)->render();
 	}
 

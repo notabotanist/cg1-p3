@@ -17,14 +17,26 @@ private:
 	/// if true, the Geometry should render solid instead of wireframe
 	bool solid;
 
+public:
+	/// Location of local coordinate system
+	float x, y, z;
+	/// Rotation of local coordinate system
+	float roll, pitch, yaw;
+
 protected:
 	Geometry();	// protected to make class abstract
+
+	/// Implement to create actual geometry with respect to local
+	/// coordinate system set up by render()
+	/// The current modelview matrix should be identical before and after.
+	virtual void doRender() = 0;
 
 public:
 	virtual ~Geometry() {}
 
-	/// render as implementor sees fit
-	virtual void render() = 0;
+	/// Set up local coordinate system, in which the implementor's
+	/// definition of doRender will place the geometry.
+	void render();
 
 	/// Call at invervals to perform animation based on implementor
 	/// Default implementation: do nothing
