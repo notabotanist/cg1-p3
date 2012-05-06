@@ -23,7 +23,10 @@ public:
 	}
 };
 
+/// Globals and prototypes
 static StereoSceneViewport* sv;
+void resetCamera();
+
 ///////////////////////
 // OpenGL callbacks
 ///////////////////////
@@ -35,6 +38,9 @@ static void glkeyboard(unsigned char key, int x, int y) {
 	sv->cam.wasdKeyboard(key);
 
 	switch (key) {
+	case 'r':
+		resetCamera();
+		break;
 	case 'q': 
 		exit(0);
 		break;
@@ -78,6 +84,15 @@ void populateScene(Scene& scene) {
 	scene.addGeometry(*(new Radar()));
 }
 
+/// Moves sv's camera to its set original position
+void resetCamera() {
+	sv->cam.x = 0;
+	sv->cam.y = 2;
+	sv->cam.z = 3;
+	sv->cam.pitch = 0;
+	sv->cam.yaw = 0;
+}
+
 ///
 /// main function TODO_DOCS_
 /// @author matthew: TODO_AUTHOR_FULL_NAME_
@@ -99,6 +114,9 @@ int main( int argc, char* argv[] ) {
 	sv = new StereoSceneViewport(theScene);
 	sv->initProjection();
 	sv->cam.updateScreenCenter();
+	resetCamera();
+
+	// Final setup, including callbacks
 	glClearColor(0,0,0,0);
 	glutDisplayFunc(gldisplay);
 	glutKeyboardFunc(glkeyboard);
