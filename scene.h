@@ -25,6 +25,10 @@ public:
 
 	/// render as implementor sees fit
 	virtual void render() = 0;
+
+	/// Call at invervals to perform animation based on implementor
+	/// Default implementation: do nothing
+	virtual void animate() {}
 };
 
 /// @author mrm4677
