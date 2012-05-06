@@ -13,7 +13,7 @@ using namespace std;
 /// @author mrm4677
 /// Abstract base class for objects renderable in Scenes
 class Geometry {
-private:
+protected:
 	/// if true, the Geometry should render solid instead of wireframe
 	bool solid;
 

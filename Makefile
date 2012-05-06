@@ -1,5 +1,5 @@
 #
-# Created by gmakemake (Sparc Jan 19 2010) on Thu May  3 01:02:55 2012
+# Created by gmakemake (Sparc Jan 19 2010) on Sun May  6 16:43:02 2012
 #
 
 #
@@ -65,30 +65,32 @@ CCLIBFLAGS = $(LIBFLAGS)
 ########## End of flags from header.mak
 
 
-CPP_FILES =	camera.cpp scene.cpp stereo.cpp
+CPP_FILES =	camera.cpp project3.cpp scene.cpp stereo.cpp targets.cpp
 C_FILES =	
 S_FILES =	
-H_FILES =	camera.h scene.h stereo.h
+H_FILES =	camera.h scene.h stereo.h targets.h
 SOURCEFILES =	$(H_FILES) $(CPP_FILES) $(C_FILES) $(S_FILES)
 .PRECIOUS:	$(SOURCEFILES)
-OBJFILES =	camera.o scene.o 
+OBJFILES =	camera.o scene.o stereo.o targets.o 
 
 #
 # Main targets
 #
 
-all:	stereo 
+all:	project3 
 
-stereo:	stereo.o $(OBJFILES)
-	$(CXX) $(CXXFLAGS) -o stereo stereo.o $(OBJFILES) $(CCLIBFLAGS)
+project3:	project3.o $(OBJFILES)
+	$(CXX) $(CXXFLAGS) -o project3 project3.o $(OBJFILES) $(CCLIBFLAGS)
 
 #
 # Dependencies
 #
 
 camera.o:	camera.h
+project3.o:	camera.h scene.h stereo.h targets.h
 scene.o:	scene.h
 stereo.o:	camera.h stereo.h
+targets.o:	scene.h targets.h
 
 #
 # Housekeeping
@@ -100,7 +102,7 @@ archive.tgz:	$(SOURCEFILES) Makefile
 	tar cf - $(SOURCEFILES) Makefile | gzip > archive.tgz
 
 clean:
-	-/bin/rm $(OBJFILES) stereo.o core 2> /dev/null
+	-/bin/rm $(OBJFILES) project3.o core 2> /dev/null
 
 realclean:        clean
-	-/bin/rm -rf stereo 
+	-/bin/rm -rf project3 
