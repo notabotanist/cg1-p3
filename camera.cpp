@@ -32,18 +32,31 @@ void Camera::translate(float tx, float ty, float tz) {
 void InputCamera::wasdKeyboard(unsigned char key) {
 	float vx, vy, vz;
 	calcView(vx, vy, vz);
+	float tmp;
 	switch (key) {
 		case 'w':
 			translate(dp*vx, dp*vy, dp*vz);
 			break;
 		case 'a':
-			translate(dp*vz, 0, -dp*vx);
+			// lol hax
+			yaw -= 90;
+			tmp = pitch;
+			pitch = 0;
+			wasdKeyboard('w');
+			yaw += 90;
+			pitch = tmp;
 			break;
 		case 's':
 			translate(-dp*vx, -dp*vy, -dp*vz);
 			break;
 		case 'd':
-			translate(-dp*vz, 0, dp*vx);
+			// lol hax
+			yaw += 90;
+			tmp = pitch;
+			pitch = 0;
+			wasdKeyboard('w');
+			yaw -= 90;
+			pitch = tmp;
 			break;
 		case ' ':
 			y += dp;
