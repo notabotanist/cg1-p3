@@ -106,6 +106,11 @@ static void gltimer(int value) {
 	glutTimerFunc(20, gltimer, 0);
 }
 
+static void glreshape(int width, int height) {
+	sv->setDimensions(width, height);
+	sv->cam.updateScreenCenter();
+}
+
 /////////////////////////
 // Other functions
 /////////////////////////
@@ -118,10 +123,10 @@ void populateScene(Scene& scene) {
 	scene.addGeometry(*radar1);
 
 	// add buildings
-	float alleySize = 3; // distance between buildings
+	float alleySize = 3.5; // distance between buildings
 	for (float x(-2*alleySize); x <= 2*alleySize; x += alleySize) {
 		for (float z(-2*alleySize); z <= 2*alleySize; z += alleySize) {
-			scene.addGeometry(*(new Building(x, 0, z, (int)(x+z)%3+1, 1.5)));
+			scene.addGeometry(*(new Building(x, 0, z, abs((int)(x+z)%4)+1, 1.5)));
 		}
 	}
 }
@@ -165,5 +170,6 @@ int main( int argc, char* argv[] ) {
 	glutPassiveMotionFunc(glpassivemouse);
 	glutMouseFunc(glmouse);
 	glutTimerFunc(20, gltimer, 0);
+	glutReshapeFunc(glreshape);
 	glutMainLoop();
 }
