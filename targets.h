@@ -10,10 +10,26 @@
 /// @author mrm4677
 /// Base class for geometry objects which can be targeted
 class Target : public Geometry {
+private:
+	int ttl;
+
+public:
+	enum TState { T_IDLE, T_TARGETED, T_EXPLODING, T_DEAD };
+	TState state;
+
+protected:
+	void doRender();
+
+	virtual void renderIdle() = 0;
+	virtual void renderReticle() = 0;
+
 public:
 	Target();
 	Target(float _x, float _y, float _z);
-	// TODO: methods appropriate for targetable things
+
+	virtual void animate();
+
+	void lockOn();
 };
 
 /// @author mrm4677
@@ -27,7 +43,8 @@ private:
 
 protected:
 	/// render implementation
-	virtual void doRender();
+	virtual void renderIdle();
+	virtual void renderReticle();
 
 public:
 	Radar();

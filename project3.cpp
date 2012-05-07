@@ -122,6 +122,9 @@ void populateScene(Scene& scene) {
 	radar1->setScale(0.5);
 	scene.addGeometry(*radar1);
 
+	// debug
+	radar1->lockOn();
+
 	// add buildings
 	float alleySize = 3.5; // distance between buildings
 	for (float x(-2*alleySize); x <= 2*alleySize; x += alleySize) {
