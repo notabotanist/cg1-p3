@@ -17,6 +17,10 @@ public:
 	enum TState { T_IDLE, T_TARGETED, T_EXPLODING, T_DEAD };
 	TState state;
 
+private:
+	void renderExplosion();
+	void renderMissile();
+
 protected:
 	void doRender();
 
@@ -29,7 +33,11 @@ public:
 
 	virtual void animate();
 
+	// Put Target into targetted state and begin countdown to impact
 	void lockOn();
+
+	// Reset target to idle state
+	void respawn();
 };
 
 /// @author mrm4677

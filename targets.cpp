@@ -4,26 +4,46 @@
 //
 // ////////////////////////////////////////////////////////////////////// 
 
+#include <cmath>
 #include <GL/glut.h>
 #include "targets.h"
 
-static const int TIME_TO_IMPACT = 2000; // frames
+static const int TIME_TO_IMPACT = 100; // frames
 static const int EXPLOSION_TIME = 25; // frames
 
 Target::Target() : Geometry(), ttl(0), state(T_IDLE) {}
 Target::Target(float _x, float _y, float _z) : Geometry(_x, _y, _z), ttl(0), state(T_IDLE) {
 }
 
+void Target::renderExplosion() {
+	glPushMatrix();
+
+	float scale = sqrt((EXPLOSION_TIME + 1 - ttl) / (float)EXPLOSION_TIME);
+	glScalef(scale, scale, scale);
+	glColor3ub(0xFF, 0x8C, 0);
+	if (solid) {
+		glutSolidSphere(2.0, 10, 5);
+	} else {
+		glutWireSphere(2.0, 10, 5);
+	}
+
+	glPopMatrix();
+}
+
+void Target::renderMissile() {
+	// TODO
+}
+
 void Target::doRender() {
 	switch (state) {
 	case T_TARGETED:
-		// TODO: draw incoming orbital strike
+		renderMissile();
 		renderReticle();
 	case T_IDLE:
 		renderIdle();
 		break;
 	case T_EXPLODING:
-		// TODO: draw explosion
+		renderExplosion();
 		break;
 	case T_DEAD:
 	default:
@@ -37,6 +57,11 @@ void Target::lockOn() {
 		state = T_TARGETED;
 		ttl = TIME_TO_IMPACT;
 	}
+}
+
+void Target::respawn() {
+	state = T_IDLE;
+	ttl = 0;
 }
 
 void Target::animate() {
