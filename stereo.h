@@ -55,7 +55,11 @@ public:
 
 	/// Initializes projection matrix
 	/// Not needed to run every display cycle
-	void initProjection();
+	void initProjection(float viewangle, float nearplane, float farplane);
+
+	/// Call to update viewport dimensions.
+	/// Automatically rectifies the projection matrix
+	void setDimensions(int w, int h);
 };
 
 #endif // STEREO_H_

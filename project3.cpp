@@ -121,7 +121,7 @@ void populateScene(Scene& scene) {
 	float alleySize = 3; // distance between buildings
 	for (float x(-2*alleySize); x <= 2*alleySize; x += alleySize) {
 		for (float z(-2*alleySize); z <= 2*alleySize; z += alleySize) {
-			scene.addGeometry(*(new Building(x, 0, z, 2, 1)));
+			scene.addGeometry(*(new Building(x, 0, z, (int)(x+z)%3+1, 1.5)));
 		}
 	}
 }
@@ -154,7 +154,7 @@ int main( int argc, char* argv[] ) {
 	populateScene(theScene);
 	
 	sv = new StereoSceneViewport(theScene);
-	sv->initProjection();
+	sv->initProjection(60, 1, 40);
 	sv->cam.updateScreenCenter();
 	resetCamera();
 

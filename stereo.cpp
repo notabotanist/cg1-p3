@@ -25,7 +25,10 @@ StereoViewport::StereoViewport() : width(1000), height(500), x(0), y(0),
 }
 
 /// init projection matrix
-void StereoViewport::initProjection() {
+void StereoViewport::initProjection(float viewangle, float nearplane, float farplane) {
+	fov = viewangle;
+	pnear = nearplane;
+	pfar = farplane;
 	// set up projection matrix
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
@@ -33,8 +36,17 @@ void StereoViewport::initProjection() {
 	glMatrixMode(GL_MODELVIEW);
 }
 
+/// change viewport dimensions
+void StereoViewport::setDimensions(int w, int h) {
+	width = w;
+	height = h;
+	// update perspective projection for new aspect ratio
+	initProjection(fov, pnear, pfar);
+}
+
 /// rendering callback
 void StereoViewport::display() {
+	glEnable(GL_DEPTH_TEST);
 	glClear(GL_COLOR_BUFFER_BIT);
 
 	// setup left viewport (right eye view)
