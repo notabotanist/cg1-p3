@@ -113,7 +113,9 @@ static void gltimer(int value) {
 /// Populates the given Scene with stuff
 void populateScene(Scene& scene) {
 	// add radar installations
-	scene.addGeometry(*(new Radar()));
+	Radar* radar1 = new Radar();
+	radar1->setScale(0.5);
+	scene.addGeometry(*radar1);
 
 	// add buildings
 	float alleySize = 3; // distance between buildings

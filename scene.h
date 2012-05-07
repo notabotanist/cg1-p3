@@ -17,6 +17,12 @@ protected:
 	/// if true, the Geometry should render solid instead of wireframe
 	bool solid;
 
+	/// factor by which this geometry will be uniformly scaled
+	float scale;
+
+	/// radius of bounding sphere of UNSCALED geometry
+	float bRadius;
+
 public:
 	/// Location of local coordinate system
 	float x, y, z;
@@ -43,9 +49,21 @@ public:
 	/// Default implementation: do nothing
 	virtual void animate() {}
 
-	/// setter
+	/// Supplies specifications of current bounding sphere
+	void getBoundingSphere(float& cx, float& cy, float& cz, float& r);
+
+	/// setters
+	/// sets solid render state
 	inline void setSolid(bool s) {
 		solid = s;
+	}
+	/// sets homogenous scale factor
+	inline void setScale(float s) {
+		scale = s;
+	}
+	/// sets radius of unscaled bounding sphere
+	inline void setBound(float r) {
+		bRadius = r;
 	}
 };
 

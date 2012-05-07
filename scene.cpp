@@ -7,12 +7,21 @@
 #include "scene.h"
 
 Geometry::Geometry() : solid(false), x(0), y(0), z(0),
-		roll(0), pitch(0), yaw(0) {
+		roll(0), pitch(0), yaw(0),
+		scale(1), bRadius(1) {
 }
 
 Geometry::Geometry(float _x, float _y, float _z) : solid(false),
 		x(_x), y(_y), z(_z),
-		roll(0), pitch(0), yaw(0) {
+		roll(0), pitch(0), yaw(0),
+		scale(1), bRadius(1) {
+}
+
+void Geometry::getBoundingSphere(float& cx, float& cy, float& cz, float& r) {
+	cx = x;
+	cy = y;
+	cz = z;
+	r = bRadius * scale;
 }
 
 // set up local coords
@@ -24,6 +33,7 @@ void Geometry::render() {
 	glRotatef(roll, 0, 0, 1);
 	glRotatef(pitch, 1, 0, 0);
 	glRotatef(yaw, 0, 1, 0);
+	glScalef(scale, scale, scale);
 
 	// go go gadget implementor
 	doRender();
