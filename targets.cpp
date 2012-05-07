@@ -21,6 +21,8 @@ void Radar::doRender() {
 	glPushMatrix();
 	// Blender helped with the modeling
 
+	// green for 'shoot me!'
+	glColor3f(0, 1, 0);
 	// draw base
 	glPushMatrix();
 	glTranslatef(0, 0.371, 0);
