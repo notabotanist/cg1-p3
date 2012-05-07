@@ -23,6 +23,37 @@ public:
 	}
 };
 
+class Building : public Geometry {
+public:
+	float height;
+	// length of both sides of building base
+	float base;
+
+protected:
+	virtual void doRender() {
+		glPushMatrix();
+
+		glColor3ub(127, 127, 127);
+		// Align base of building with floor
+		glTranslatef(0, height/2, 0);
+		glScalef(base, height, base);
+		if (solid) {
+			glutSolidCube(1.0);
+		} else {
+			glutWireCube(1.0);
+		}
+
+		glPopMatrix();
+	}
+
+public:
+	/// Constructor
+	/// Specify xyz location, height, and base
+	Building(float x, float y, float z, float h, float b) :
+		Geometry(x, y, z), height(h), base(b) {
+	}
+};
+
 /// Globals and prototypes
 static StereoSceneViewport* sv;
 void resetCamera();
@@ -81,7 +112,16 @@ static void gltimer(int value) {
 
 /// Populates the given Scene with stuff
 void populateScene(Scene& scene) {
+	// add radar installations
 	scene.addGeometry(*(new Radar()));
+
+	// add buildings
+	float alleySize = 3; // distance between buildings
+	for (float x(-2*alleySize); x <= 2*alleySize; x += alleySize) {
+		for (float z(-2*alleySize); z <= 2*alleySize; z += alleySize) {
+			scene.addGeometry(*(new Building(x, 0, z, 2, 1)));
+		}
+	}
 }
 
 /// Moves sv's camera to its set original position
