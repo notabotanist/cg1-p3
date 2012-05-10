@@ -31,7 +31,18 @@ void Target::renderExplosion() {
 }
 
 void Target::renderMissile() {
-	// TODO
+	if (ttl <= 2) {
+		glPushMatrix();
+		glScalef(0.1, 10, 0.1);
+		glTranslatef(0, 0.5, 0);
+		glColor3f(1, 0, 1);
+		if (solid) {
+			glutSolidCube(1.0);
+		} else {
+			glutWireCube(1.0);
+		}
+		glPopMatrix();
+	}
 }
 
 void Target::doRender() {
