@@ -89,6 +89,12 @@ public:
 
 	/// Sets solid flag for all children
 	void setAllSolid(bool s);
+
+	/// Cast a pick ray through the scene
+	/// Returns a pointer to the Geometry with the closest intersecting
+	/// bounding sphere to the origin of the pick ray.
+	Geometry* pickRay(float cx, float cy, float cz,
+			  float nx, float ny, float nz);
 };
 
 #endif

@@ -8,13 +8,13 @@
 
 Geometry::Geometry() : solid(false), x(0), y(0), z(0),
 		roll(0), pitch(0), yaw(0),
-		scale(1), bRadius(1) {
+		scale(1), bRadius(0) {
 }
 
 Geometry::Geometry(float _x, float _y, float _z) : solid(false),
 		x(_x), y(_y), z(_z),
 		roll(0), pitch(0), yaw(0),
-		scale(1), bRadius(1) {
+		scale(1), bRadius(0) {
 }
 
 void Geometry::getBoundingSphere(float& cx, float& cy, float& cz, float& r) {
@@ -82,4 +82,9 @@ void Scene::setAllSolid(bool s) {
 			iter != children.end(); iter++) {
 		(*iter)->setSolid(s);
 	}
+}
+
+Geometry* Scene::pickRay(float cx, float cy, float cz,
+			 float nx, float ny, float nz) {
+	// TODO: ray-sphere intersection testing goes here
 }

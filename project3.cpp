@@ -52,6 +52,7 @@ public:
 	/// Specify xyz location, height, and base
 	Building(float x, float y, float z, float h, float b) :
 		Geometry(x, y, z), height(h), base(b) {
+		setBound(b/2);
 	}
 };
 
