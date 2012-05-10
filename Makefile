@@ -1,5 +1,5 @@
 #
-# Created by gmakemake (Sparc Jan 19 2010) on Sun May  6 16:43:02 2012
+# Created by gmakemake (Ubuntu Sep  7 2011) on Thu May 10 14:12:56 2012
 #
 
 #
@@ -7,13 +7,15 @@
 #
 
 .SUFFIXES:
-.SUFFIXES:	.a .o .c .C .cpp .s
+.SUFFIXES:	.a .o .c .C .cpp .s .S
 .c.o:
 		$(COMPILE.c) $<
 .C.o:
 		$(COMPILE.cc) $<
 .cpp.o:
 		$(COMPILE.cc) $<
+.S.s:
+		$(CPP) -o $*.s $<
 .s.o:
 		$(COMPILE.cc) $<
 .c.a:
@@ -38,7 +40,7 @@ LINK.c = $(CC) $(CFLAGS) $(CPPFLAGS) $(LDFLAGS)
 LINK.cc = $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(LDFLAGS)
 COMPILE.c = $(CC) $(CFLAGS) $(CPPFLAGS) -c
 COMPILE.cc = $(CXX) $(CXXFLAGS) $(CPPFLAGS) -c
-
+CPP = $(CPP) $(CPPFLAGS)
 ########## Flags from header.mak
 
 #
@@ -65,13 +67,14 @@ CCLIBFLAGS = $(LIBFLAGS)
 ########## End of flags from header.mak
 
 
-CPP_FILES =	camera.cpp project3.cpp scene.cpp stereo.cpp targets.cpp
+CPP_FILES =	camera.cpp hud.cpp project3.cpp scene.cpp stereo.cpp targets.cpp
 C_FILES =	
+PS_FILES =	
 S_FILES =	
-H_FILES =	camera.h scene.h stereo.h targets.h
+H_FILES =	camera.h hud.h scene.h stereo.h targets.h
 SOURCEFILES =	$(H_FILES) $(CPP_FILES) $(C_FILES) $(S_FILES)
 .PRECIOUS:	$(SOURCEFILES)
-OBJFILES =	camera.o scene.o stereo.o targets.o 
+OBJFILES =	camera.o hud.o scene.o stereo.o targets.o 
 
 #
 # Main targets
@@ -87,7 +90,8 @@ project3:	project3.o $(OBJFILES)
 #
 
 camera.o:	camera.h
-project3.o:	camera.h scene.h stereo.h targets.h
+hud.o:	camera.h hud.h scene.h
+project3.o:	camera.h hud.h scene.h stereo.h targets.h
 scene.o:	scene.h
 stereo.o:	camera.h stereo.h
 targets.o:	scene.h targets.h

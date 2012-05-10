@@ -10,6 +10,7 @@
 #include "stereo.h"
 #include "camera.h"
 #include "targets.h"
+#include "hud.h"
 
 class StereoSceneViewport : public StereoViewport {
 public:
@@ -56,6 +57,7 @@ public:
 
 /// Globals and prototypes
 static StereoSceneViewport* sv;
+static Hud* hud;
 void resetCamera();
 
 ///////////////////////
@@ -67,6 +69,7 @@ static void gldisplay() {
 
 static void glkeyboard(unsigned char key, int x, int y) {
 	sv->cam.wasdKeyboard(key);
+	hud->fixLCS();
 
 	switch (key) {
 	case 'r':
@@ -91,11 +94,16 @@ static void glkeyboard(unsigned char key, int x, int y) {
 
 static void glpassivemouse(int x, int y) {
 	sv->cam.mouseMove(x,y);
+	hud->fixLCS();
 }
 
 static void glmouse(int button, int state, int x, int y) {
 	if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {
-		sv->cam.captureMouse();
+		if (sv->cam.isMouseCaptured()) {
+			hud->startWarning();
+		} else {
+			sv->cam.captureMouse();
+		}
 	}
 	if (state == GLUT_DOWN) {
 		glpassivemouse(x, y);
@@ -120,10 +128,10 @@ static void glreshape(int width, int height) {
 
 /// Populates the given Scene with stuff
 void populateScene(Scene& scene) {
+	// add hud
+	scene.addGeometry(*hud);
+
 	// add radar installations
-	//Radar* radar1 = new Radar();
-	//radar1->setScale(0.5);
-	//scene.addGeometry(*radar1);
 	float alleySize = 3.5; // distance between buildings
 	float halfAlley = alleySize / 2;
 
@@ -163,12 +171,14 @@ int main( int argc, char* argv[] ) {
 
 	// create scene
 	Scene theScene;
-	populateScene(theScene);
 	
 	sv = new StereoSceneViewport(theScene);
 	sv->initProjection(60, 1, 40);
 	sv->cam.updateScreenCenter();
 	resetCamera();
+	hud = new Hud(sv->cam);
+
+	populateScene(theScene);
 
 	// Final setup, including callbacks
 	glClearColor(0,0,0,0);
