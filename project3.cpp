@@ -97,6 +97,9 @@ static void glmouse(int button, int state, int x, int y) {
 	if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {
 		sv->cam.captureMouse();
 	}
+	if (state == GLUT_DOWN) {
+		glpassivemouse(x, y);
+	}
 }
 
 static void gltimer(int value) {
@@ -118,17 +121,18 @@ static void glreshape(int width, int height) {
 /// Populates the given Scene with stuff
 void populateScene(Scene& scene) {
 	// add radar installations
-	Radar* radar1 = new Radar();
-	radar1->setScale(0.5);
-	scene.addGeometry(*radar1);
+	//Radar* radar1 = new Radar();
+	//radar1->setScale(0.5);
+	//scene.addGeometry(*radar1);
+	float alleySize = 3.5; // distance between buildings
+	float halfAlley = alleySize / 2;
 
-	// debug
-	radar1->lockOn();
+	scene.addGeometry(*(new Radar(0*alleySize+halfAlley, 0, 0)));
+	scene.addGeometry(*(new Radar(0, 0, 1*alleySize+halfAlley)));
 
 	// add buildings
-	float alleySize = 3.5; // distance between buildings
-	for (float x(-2*alleySize); x <= 2*alleySize; x += alleySize) {
-		for (float z(-2*alleySize); z <= 2*alleySize; z += alleySize) {
+	for (float x(-4*alleySize); x <= 4*alleySize; x += alleySize) {
+		for (float z(-4*alleySize); z <= 4*alleySize; z += alleySize) {
 			scene.addGeometry(*(new Building(x, 0, z, abs((int)(x+z)%4)+1, 1.5)));
 		}
 	}

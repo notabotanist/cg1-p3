@@ -95,9 +95,12 @@ void Target::animate() {
 
 
 Radar::Radar() : rotation(0), dR(5) {
+	setScale(0.5);	// defaults to 0.5 scale factor
 }
 
 Radar::Radar(float _x, float _y, float _z) : Target(_x, _y, _z), rotation(0), dR(5) {
+	setBound(1.2);	// TODO: replace with more accurate value
+	setScale(0.5);	// defaults to 0.5 scale factor
 }
 
 void Radar::renderIdle() {
