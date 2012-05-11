@@ -33,7 +33,7 @@ void Target::renderExplosion() {
 void Target::renderMissile() {
 	if (ttl <= 2) {
 		glPushMatrix();
-		glScalef(0.1, 10, 0.1);
+		glScalef(0.1, 50, 0.1);
 		glTranslatef(0, 0.5, 0);
 		glColor3f(1, 0, 1);
 		if (solid) {
@@ -95,11 +95,12 @@ void Target::animate() {
 
 
 Radar::Radar() : rotation(0), dR(5) {
+	setBound(1.420);
 	setScale(0.5);	// defaults to 0.5 scale factor
 }
 
 Radar::Radar(float _x, float _y, float _z) : Target(_x, _y, _z), rotation(0), dR(5) {
-	setBound(1.2);	// TODO: replace with more accurate value
+	setBound(1.420);
 	setScale(0.5);	// defaults to 0.5 scale factor
 }
 

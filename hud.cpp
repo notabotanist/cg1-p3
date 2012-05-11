@@ -16,12 +16,12 @@ Hud::Hud(Camera& cam, float retlen, float retoff) : Geometry(), head(cam),
 
 void Hud::startWarning() {
 	warn = true;
-	ttl = 75;	// 75 frames of warning
+	ttl = 32;	// 32 frames of warning
 }
 
 /// move LCS in front of camera
 void Hud::fixLCS() {
-	float near = 2.1; // nastily assumes the near plane is 1.0 in front of cam
+	float near = 2.5; // nastily assumes the near plane is 1.0 in front of cam
 	float xoff, yoff, zoff;
 	head.calcView(xoff, yoff, zoff);
 

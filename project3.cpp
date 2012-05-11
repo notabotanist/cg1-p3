@@ -59,7 +59,9 @@ public:
 /// Globals and prototypes
 static StereoSceneViewport* sv;
 static Hud* hud;
-void resetCamera();
+static const int NUM_TARGETS = 5;
+static Target* allTargets[NUM_TARGETS];
+void resetScene();
 void paintPickTarget();
 
 ///////////////////////
@@ -75,7 +77,7 @@ static void glkeyboard(unsigned char key, int x, int y) {
 
 	switch (key) {
 	case 'r':
-		resetCamera();
+		resetScene();
 		break;
 	case 'q': 
 		exit(0);
@@ -134,11 +136,16 @@ void populateScene(Scene& scene) {
 	scene.addGeometry(*hud);
 
 	// add radar installations
-	float alleySize = 3.5; // distance between buildings
+	float alleySize = 3.7; // distance between buildings
 	float halfAlley = alleySize / 2;
 
-	scene.addGeometry(*(new Radar(0*alleySize+halfAlley, 0, 0)));
-	scene.addGeometry(*(new Radar(0, 0, 1*alleySize+halfAlley)));
+	int radarCoords[] = {1, 0,  0, 3,  -3, -4,  -6, 1,  -8, 4};
+	for (int i(0); i < NUM_TARGETS; i++) {
+		allTargets[i] = new Radar(radarCoords[2*i] * halfAlley, 0,
+					  radarCoords[2*i + 1] * halfAlley);
+		scene.addGeometry(*allTargets[i]);
+	}
+	allTargets[4]->y = 4;	// put this one on top of the building
 
 	// add buildings
 	for (float x(-4*alleySize); x <= 4*alleySize; x += alleySize) {
@@ -148,13 +155,21 @@ void populateScene(Scene& scene) {
 	}
 }
 
-/// Moves sv's camera to its set original position
+/// Moves sv's camera to its set original position and also repawns all targets
 void resetCamera() {
 	sv->cam.x = 0;
 	sv->cam.y = 2;
 	sv->cam.z = 3;
 	sv->cam.pitch = 0;
 	sv->cam.yaw = 0;
+}
+
+void resetScene() {
+	resetCamera();
+
+	for (int i(0); i < NUM_TARGETS; i++) {
+		allTargets[i]->respawn();
+	}
 }
 
 /// Performs ray picking to choose a target for painting
