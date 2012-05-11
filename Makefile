@@ -102,8 +102,8 @@ targets.o:	scene.h targets.h
 
 Archive:	archive.tgz
 
-archive.tgz:	$(SOURCEFILES) Makefile
-	tar cf - $(SOURCEFILES) Makefile | gzip > archive.tgz
+archive.tgz:	$(SOURCEFILES) Makefile README
+	tar cf - $(SOURCEFILES) Makefile README | gzip > archive.tgz
 
 clean:
 	-/bin/rm $(OBJFILES) project3.o core 2> /dev/null
