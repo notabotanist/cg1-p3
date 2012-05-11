@@ -56,6 +56,31 @@ public:
 	}
 };
 
+class Floor : public Geometry {
+public:
+	float extent;
+
+protected:
+	virtual void doRender() {
+		glColor3ub(0, 127, 0);
+
+		if (solid) {
+			glBegin(GL_QUADS);
+		} else {
+			glBegin(GL_LINE_LOOP);
+		}
+			glVertex3f(extent, 0, extent);
+			glVertex3f(-extent, 0, extent);
+			glVertex3f(-extent, 0, -extent);
+			glVertex3f(extent, 0, -extent);
+		glEnd();
+	}
+
+public:
+	Floor(float ex) : Geometry(), extent(ex) {
+	}
+};
+
 /// Globals and prototypes
 static StereoSceneViewport* sv;
 static Hud* hud;
@@ -153,6 +178,9 @@ void populateScene(Scene& scene) {
 			scene.addGeometry(*(new Building(x, 0, z, abs((int)(x+z)%4)+1, 1.5)));
 		}
 	}
+
+	// add floor
+	scene.addGeometry(*(new Floor(5*alleySize)));
 }
 
 /// Moves sv's camera to its set original position and also repawns all targets
