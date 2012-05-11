@@ -1,0 +1,23 @@
+Computer Graphics 1
+Project 3 README
+Matthew MacEwan
+-----------------------------
+
+Developed and tested on Ubuntu machines at home and in the lab.
+
+Building Instructions:
+No special procedure required.  Use the provided makefile and it should work
+just fine.
+
+Scene:
+This program renders a stereoscopic viewport of the scene.  It is a cross-eye
+type of stereogram, so to get the 3d effect, cross your eyes until the two
+images overlap and come into focus.
+
+"Gameplay":
+Your UNV (Unmanned Noclip Vehicle) is equipped with a laser targeting device.
+Clicking the mouse while the view is centered on an enemy radar installation
+will mark it for orbital bombardment.  Note that the on-screen reticle is 
+positioned in space in front of the camera, so placing a radar station in the
+middle of either of the reticles will cause a miss.  Should you click the mouse
+while pointing at an invalid target, a red X will flash as indication.
