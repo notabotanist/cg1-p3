@@ -71,7 +71,7 @@ CPP_FILES =	camera.cpp hud.cpp project3.cpp scene.cpp stereo.cpp targets.cpp
 C_FILES =	
 PS_FILES =	
 S_FILES =	
-H_FILES =	camera.h hud.h scene.h stereo.h targets.h
+H_FILES =	camera.h hud.h scene.h stereo.h targets.h vecmath.h
 SOURCEFILES =	$(H_FILES) $(CPP_FILES) $(C_FILES) $(S_FILES)
 .PRECIOUS:	$(SOURCEFILES)
 OBJFILES =	camera.o hud.o scene.o stereo.o targets.o 
@@ -92,7 +92,7 @@ project3:	project3.o $(OBJFILES)
 camera.o:	camera.h
 hud.o:	camera.h hud.h scene.h
 project3.o:	camera.h hud.h scene.h stereo.h targets.h
-scene.o:	scene.h
+scene.o:	scene.h vecmath.h
 stereo.o:	camera.h stereo.h
 targets.o:	scene.h targets.h
 
