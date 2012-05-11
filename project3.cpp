@@ -60,6 +60,7 @@ public:
 static StereoSceneViewport* sv;
 static Hud* hud;
 void resetCamera();
+void paintPickTarget();
 
 ///////////////////////
 // OpenGL callbacks
@@ -101,7 +102,7 @@ static void glpassivemouse(int x, int y) {
 static void glmouse(int button, int state, int x, int y) {
 	if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {
 		if (sv->cam.isMouseCaptured()) {
-			hud->startWarning();
+			paintPickTarget();
 		} else {
 			sv->cam.captureMouse();
 		}
@@ -154,6 +155,36 @@ void resetCamera() {
 	sv->cam.z = 3;
 	sv->cam.pitch = 0;
 	sv->cam.yaw = 0;
+}
+
+/// Performs ray picking to choose a target for painting
+void paintPickTarget() {
+	// get pick ray down center of camera
+	float nx, ny, nz;
+	sv->cam.calcView(nx, ny, nz);
+	float cx, cy, cz;
+	cx = sv->cam.x;
+	cy = sv->cam.y;
+	cz = sv->cam.z;
+
+	// locate closest target
+	Geometry* target;
+	target = sv->scene.pickRay(cx, cy, cz, nx, ny, nz);
+	
+	if (target == NULL) {
+		// pick ray intersected nothing
+		hud->startWarning();
+	} else {
+		// determine if pick ray intersected a Target
+		Target* deftarget = dynamic_cast<Target*>(target);
+		if (deftarget != NULL) {
+			// it's a target! Paint that sh**
+			deftarget->lockOn();
+		} else {
+			// it's not a target; probably a building. no paint
+			hud->startWarning();
+		}
+	}
 }
 
 ///

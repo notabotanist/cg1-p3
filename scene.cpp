@@ -149,7 +149,7 @@ bool findRaySphere(Vector3 raydir, Point3 raysrc, Point3 spheresrc, float rad,
 Geometry* Scene::pickRay(float cx, float cy, float cz,
 			 float nx, float ny, float nz) {
 	// Attributes to determine which object in the scene is picked
-	Geometry* closepick;
+	Geometry* closepick = NULL;
 	int minT = 1000;
 
 	// Pack arguments
